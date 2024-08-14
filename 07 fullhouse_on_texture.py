@@ -86,8 +86,7 @@ def main():
     source2 = vtkPlaneSource()
     source2.SetOrigin(0,0,0)
     source2.SetPoint1(0.01,0,0)
-    source2.SetPoint2(0,0.01,0)
-    #source2.SetRadius(0.02)
+    source2.SetPoint2(0,0,0.01)
     glyph2 = vtkGlyph3D()
     glyph2.SetInputData(polydata2)
     glyph2.SetSourceConnection(source2.GetOutputPort())
@@ -101,6 +100,16 @@ def main():
     pointsActor2.GetProperty().SetColor(colors.GetColor3d("Green"))
     pointsActor2.GetProperty().SetOpacity(0.3)
 
+    light = vtk.vtkLight()
+    light.SetLightTypeToSceneLight()
+    light.SetPosition(14/2,10,10/2)
+    light.SetFocalPoint(14/2,0,10/2)
+    #light.SetPositional(True)
+    #light.SetAttenuationValues(0,0,0)
+    #light.SetConeAngle(10)
+    #lightActor = vtk.vtkLightActor()
+    #lightActor.SetLight(light)
+
     ren = vtkRenderer()
     renWin = vtkRenderWindow()
     renWin.AddRenderer(ren)
@@ -111,10 +120,11 @@ def main():
     ren.AddActor(planeActor)
     ren.AddActor(pointsActor)
     ren.AddActor(pointsActor2)
+    ren.AddLight(light)
+    #ren.AddViewProp(lightActor)
     ren.SetBackground(colors.GetColor3d("Blue"))
     renWin.SetSize(300, 300)
     renWin.SetWindowName('CylinderExample')
-    #renWin.SetInter
 
     # This allows the interactor to initalize itself. It has to be
     # called before an event loop.
@@ -131,7 +141,6 @@ def main():
     # Start the event loop.
     #iren.GetInteractorStyle().SetCurrentStyleToTrackballCamera()
     iren.SetInteractorStyle(vtk.vtkInteractorStyleTerrain())
-    
     iren.Start()
 
 
