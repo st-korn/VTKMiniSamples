@@ -73,6 +73,25 @@ def main():
                     points2.InsertNextPoint(x,0.01,z)
     polydata2.SetPoints(points2)
 
+    polydata3 = vtk.vtkPolyData()
+    points3 = vtk.vtkPoints()
+    for n in range(0,19):
+        for m in range(0,19):
+            for y in numpy.arange(0,0.1,0.01):
+                for x in numpy.arange(n*0.3,n*0.3+0.2,0.01):
+                    for z in numpy.arange(m*0.3+2.66,m*0.3+2.71,0.01):
+                        points3.InsertNextPoint(x,y,z)
+    polydata3.SetPoints(points3)
+
+    polydata4 = vtk.vtkPolyData()
+    points4 = vtk.vtkPoints()
+    for n in range(0,19):
+        for m in range(0,19):
+            for x in numpy.arange(n*0.3,n*0.3+0.2,0.01):
+                for z in numpy.arange(m*0.3+3.7,m*0.3+3.8,0.01):
+                    points4.InsertNextPoint(x,0.01,z)
+    polydata4.SetPoints(points4)
+
     source = vtkSphereSource()
     source.SetRadius(0.005)
     glyph = vtkGlyph3D()
@@ -85,7 +104,7 @@ def main():
     pointsMapper.SetInputConnection(glyph.GetOutputPort())
     pointsActor = vtkActor()
     pointsActor.SetMapper(pointsMapper)
-    pointsActor.GetProperty().SetColor(colors.GetColor3d("Banana"));
+    pointsActor.GetProperty().SetColor(colors.GetColor3d("Green"));
 
     source2 = vtkPlaneSource()
     source2.SetOrigin(0,0,0)
@@ -103,6 +122,37 @@ def main():
     pointsActor2.SetMapper(pointsMapper2)
     pointsActor2.GetProperty().SetColor(colors.GetColor3d("Green"))
     pointsActor2.GetProperty().SetOpacity(0.3)
+
+    source3 = vtkSphereSource()
+    source3.SetRadius(0.005)
+    glyph3 = vtkGlyph3D()
+    glyph3.SetInputData(polydata3)
+    glyph3.SetSourceConnection(source3.GetOutputPort())
+    glyph3.ScalingOff()
+    glyph3.Update()
+
+    pointsMapper3 = vtkPolyDataMapper()
+    pointsMapper3.SetInputConnection(glyph3.GetOutputPort())
+    pointsActor3 = vtkActor()
+    pointsActor3.SetMapper(pointsMapper3)
+    pointsActor3.GetProperty().SetColor(colors.GetColor3d("Red"));
+
+    source4 = vtkPlaneSource()
+    source4.SetOrigin(0,0,0)
+    source4.SetPoint1(0.01,0,0)
+    source4.SetPoint2(0,0,0.01)
+    glyph4 = vtkGlyph3D()
+    glyph4.SetInputData(polydata4)
+    glyph4.SetSourceConnection(source4.GetOutputPort())
+    glyph4.ScalingOff()
+    glyph4.Update()
+
+    pointsMapper4 = vtkPolyDataMapper()
+    pointsMapper4.SetInputConnection(glyph4.GetOutputPort())
+    pointsActor4 = vtkActor()
+    pointsActor4.SetMapper(pointsMapper4)
+    pointsActor4.GetProperty().SetColor(colors.GetColor3d("Red"))
+    pointsActor4.GetProperty().SetOpacity(0.3)
 
     light = vtk.vtkLight()
     light.SetLightTypeToSceneLight()
@@ -124,6 +174,8 @@ def main():
     ren.AddActor(planeActor)
     ren.AddActor(pointsActor)
     ren.AddActor(pointsActor2)
+    ren.AddActor(pointsActor3)
+    ren.AddActor(pointsActor4)
     ren.AddLight(light)
     #ren.AddViewProp(lightActor)
     ren.SetBackground(colors.GetColor3d("Blue"))
