@@ -42,9 +42,9 @@ def main():
     # This creates a polygonal cylinder model with eight circumferential
     # facets.
     plane = vtkPlaneSource()
-    plane.SetOrigin(0,0,0)
-    plane.SetPoint1(14,0,0)
-    plane.SetPoint2(0,10,0)
+    plane.SetOrigin(0,0,10)
+    plane.SetPoint1(14,0,10)
+    plane.SetPoint2(0,0,0)
     plane.SetXResolution(1)
     plane.SetYResolution(1)
     plane.Update()
@@ -56,17 +56,17 @@ def main():
 
     polydata = vtk.vtkPolyData()
     points = vtk.vtkPoints()
-    for z in numpy.arange(0,0.1,0.01):
+    for y in numpy.arange(0,0.1,0.01):
         for x in numpy.arange(7,7.2,0.01):
-            for y in numpy.arange(7.29,7.34,0.01):
+            for z in numpy.arange(2.66,2.71,0.01):
                 points.InsertNextPoint(x,y,z)
     polydata.SetPoints(points)
 
     polydata2 = vtk.vtkPolyData()
     points2 = vtk.vtkPoints()
     for x in numpy.arange(7,7.2,0.01):
-        for y in numpy.arange(6.2,6.3,0.01):
-            points2.InsertNextPoint(x,y,0.01)
+        for z in numpy.arange(3.7,3.8,0.01):
+            points2.InsertNextPoint(x,0.01,z)
     polydata2.SetPoints(points2)
 
     source = vtkSphereSource()
@@ -123,11 +123,15 @@ def main():
     # We'll zoom in a little by accessing the camera and invoking a "Zoom"
     # method on it.
     ren.ResetCamera()
-    ren.GetActiveCamera().Elevation(-45)
+    ren.GetActiveCamera().Elevation(45)
+    #ren.GetActiveCamera().Yaw(180)
+    #ren.GetActiveCamera().Azimuth(180)
     renWin.Render()
 
     # Start the event loop.
-    iren.GetInteractorStyle().SetCurrentStyleToTrackballCamera()
+    #iren.GetInteractorStyle().SetCurrentStyleToTrackballCamera()
+    iren.SetInteractorStyle(vtk.vtkInteractorStyleTerrain())
+    
     iren.Start()
 
 
