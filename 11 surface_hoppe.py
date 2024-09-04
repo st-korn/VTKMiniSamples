@@ -11,12 +11,14 @@ from vtkmodules.vtkFiltersSources import vtkSphereSource
 from vtkmodules.vtkCommonCore import vtkPoints
 from vtkmodules.vtkCommonDataModel import vtkPolyData
 from vtkmodules.vtkFiltersCore import vtkGlyph3D
+from vtkmodules.vtkIOImage import vtkImageReader2Factory
 from vtkmodules.vtkRenderingCore import (
     vtkActor,
     vtkPolyDataMapper,
     vtkRenderWindow,
     vtkRenderWindowInteractor,
-    vtkRenderer
+    vtkRenderer,
+    vtkTexture
 )
 import sys
 
@@ -57,7 +59,7 @@ def main():
  
     polyData = vtkPolyData()
     polyData.SetPoints(points)
- 
+
     surface = vtk.vtkSurfaceReconstructionFilter()
     surface.SetNeighborhoodSize(2)
     surface.SetSampleSpacing(2)
@@ -87,6 +89,7 @@ def main():
 
     mapper = vtkPolyDataMapper()
     mapper.SetInputConnection(reverse.GetOutputPort())
+    mapper.ScalarVisibilityOff()
 
     actor = vtkActor()
     actor.SetMapper(mapper)
