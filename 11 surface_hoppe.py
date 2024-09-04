@@ -17,8 +17,7 @@ from vtkmodules.vtkRenderingCore import (
     vtkPolyDataMapper,
     vtkRenderWindow,
     vtkRenderWindowInteractor,
-    vtkRenderer,
-    vtkTexture
+    vtkRenderer
 )
 import sys
 
