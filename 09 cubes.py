@@ -192,7 +192,7 @@ def main():
     ren.AddActor(pointsActor4)
     ren.AddLight(light)
     ren.AddLight(light2)
-    ren.AddLight(light3)
+    #ren.AddLight(light3)
     #ren.AddViewProp(lightActor)
     ren.SetBackground(colors.GetColor3d("Blue"))
     renWin.SetSize(300, 300)
