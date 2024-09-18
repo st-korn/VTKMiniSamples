@@ -110,6 +110,12 @@ def main():
     ren.ResetCamera()
     renWin.Render()
 
+    exporter = vtk.vtkVRMLExporter()
+    exporter.SetRenderWindow(renWin)
+    exporter.SetFileName("export.wrl")
+    exporter.Write()
+    exporter.Update()
+
     iren.SetInteractorStyle(vtk.vtkInteractorStyleTerrain())
     iren.Start()
 
